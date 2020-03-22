@@ -3,6 +3,7 @@ import argparse
 import requests
 import re
 from html.parser import HTMLParser
+from urllib.parse import urljoin
 
 
 __author__ = 'luisfff29'
@@ -49,7 +50,7 @@ def main():
 
     for link in parser.tags_list:
         if link.startswith('/'):
-            list_urls.append(args.url + link)
+            list_urls.append(urljoin(args.url, link))
 
     for x in sorted(set(list_urls)):
         print(x)
