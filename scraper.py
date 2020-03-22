@@ -39,7 +39,6 @@ class MyHTMLParser(HTMLParser):
 def main():
     parser = parser_argparse()
     args = parser.parse_args()
-    print(args)
 
     r = requests.get(args.url).text
     parser = MyHTMLParser()
@@ -55,21 +54,21 @@ def main():
     for x in sorted(set(list_urls)):
         print(x)
 
-    # print('\nEMAILS:\n')
-    # list_emails = pattern_email.findall(r)
-    # if list_emails:
-    #     for x in sorted(set(list_emails)):
-    #         print(x)
-    # else:
-    #     print('None')
+    print('\nEMAILS:\n')
+    list_emails = pattern_email.findall(r)
+    if list_emails:
+        for x in sorted(set(list_emails)):
+            print(x)
+    else:
+        print('None')
 
-    # print('\nPHONE NUMBERS:\n')
-    # list_phones = pattern_phone.findall(r)
-    # if list_phones:
-    #     for x in sorted(set(list_phones)):
-    #         print(x)
-    # else:
-    #     print('None')
+    print('\nPHONE NUMBERS:\n')
+    list_phones = pattern_phone.findall(r)
+    if list_phones:
+        for x in sorted(set(list_phones)):
+            print(x)
+    else:
+        print('None')
 
 
 if __name__ == '__main__':
