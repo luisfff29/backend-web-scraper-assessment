@@ -25,12 +25,14 @@ def parser_argparse():
 
 
 class MyHTMLParser(HTMLParser):
+
+    tags_list = []
+
     def handle_starttag(self, tag, attrs):
-        tags_list = []
         for (attr, content) in attrs:
             if tag in ['a', 'img'] and attr in ['href', 'src']:
-                tags_list.append(content)
-        return tags_list[]
+                self.tags_list.append(content)
+        return self.tags_list
 
 
 def main():
@@ -41,6 +43,7 @@ def main():
     r = requests.get(args.url).text
     parser = MyHTMLParser()
     parser.feed(r)
+    print(parser.tags_list)
     # print('\nURLS:\n')
     # list_urls = pattern_url.findall(r)
     # for x in sorted(set(list_urls)):
