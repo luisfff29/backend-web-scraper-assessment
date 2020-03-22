@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import argparse
 import requests
 import re
@@ -29,16 +29,21 @@ def main():
     print(args)
 
     r = requests.get(args.url).text
-    # print(r)
-    # list_urls = pattern_url.findall(r)
-    # for x in sorted(set(list_urls)):
-    #     print(x)
+    print('\nURLS:\n')
+    list_urls = pattern_url.findall(r)
+    for x in sorted(set(list_urls)):
+        print(x)
 
-    # list_emails = pattern_email.findall(r)
-    # for x in sorted(set(list_emails)):
-    #     print(x)
+    list_emails = pattern_email.findall(r)
+    print('\nEMAILS:\n')
+    if list_emails:
+        for x in sorted(set(list_emails)):
+            print(x)
+    else:
+        print('None')
 
     list_phones = pattern_phone.findall(r)
+    print('\nPHONE NUMBERS:\n')
     if list_phones:
         for x in sorted(set(list_phones)):
             print(x)
