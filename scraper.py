@@ -12,6 +12,8 @@ pattern_url = re.compile(
     '[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 pattern_email = re.compile(
     r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)')
+pattern_phone = re.compile(
+    r'1?[( ]*[2-9][0-8][0-9][) .-]+[2-9][0-9]{2}[. -]+[0-9]{4}')
 
 
 def parser_argparse():
@@ -27,13 +29,21 @@ def main():
     print(args)
 
     r = requests.get(args.url).text
+    # print(r)
     # list_urls = pattern_url.findall(r)
     # for x in sorted(set(list_urls)):
     #     print(x)
 
-    list_emails = pattern_email.findall(r)
-    for x in sorted(set(list_emails)):
-        print(x)
+    # list_emails = pattern_email.findall(r)
+    # for x in sorted(set(list_emails)):
+    #     print(x)
+
+    list_phones = pattern_phone.findall(r)
+    if list_phones:
+        for x in sorted(set(list_phones)):
+            print(x)
+    else:
+        print('None')
 
 
 if __name__ == '__main__':
