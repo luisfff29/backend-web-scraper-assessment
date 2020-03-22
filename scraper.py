@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 
 __author__ = 'luisfff29'
 
-
+# Regex to find urls, emails, and phones
 pattern_url = re.compile(
     r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|'
     '[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
@@ -18,6 +18,7 @@ pattern_phone = re.compile(
     r'1?[( ]*[2-9][0-8][0-9][) .-]+[2-9][0-9]{2}[. -]+[0-9]{4}')
 
 
+# Create argparse
 def parser_argparse():
     parser = argparse.ArgumentParser(
         description='Input link to start scrapping')
@@ -25,6 +26,7 @@ def parser_argparse():
     return parser
 
 
+# Parsing HTML with HTMLParser Module
 class MyHTMLParser(HTMLParser):
 
     tags_list = []
@@ -40,21 +42,24 @@ def main():
     parser = parser_argparse()
     args = parser.parse_args()
 
+    # Read response data of url given in argparse
     r = requests.get(args.url).text
     parser = MyHTMLParser()
+    # Find more urls inside 'a' and 'img' attributes
     parser.feed(r)
 
     print('\nURLS:\n')
     list_urls = pattern_url.findall(r)
-
+    # Concat http regex urls with attr urls
     for link in parser.tags_list:
         if link.startswith('/'):
             list_urls.append(urljoin(args.url, link))
-
+    # Print all urls sorted and no-duplicates
     for x in sorted(set(list_urls)):
         print(x)
 
     print('\nEMAILS:\n')
+    # Print all emails
     list_emails = pattern_email.findall(r)
     if list_emails:
         for x in sorted(set(list_emails)):
@@ -63,6 +68,7 @@ def main():
         print('None')
 
     print('\nPHONE NUMBERS:\n')
+    # Print all phone numbers
     list_phones = pattern_phone.findall(r)
     if list_phones:
         for x in sorted(set(list_phones)):
